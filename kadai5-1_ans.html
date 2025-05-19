@@ -1,0 +1,26 @@
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>演習課題5-1：外部APIの呼び出しテスト</title>
+</head>
+<body>
+    <h1 id="msg">郵便番号API</h1>
+    <form name="apiform"><p>
+        郵便番号：<input type="text" name="zipcode">
+        <button type="button" id="btn1" onclick="zip_api(this.form)">実行</button>
+    </p></form>
+    
+    <div id="result">結果はここに表示</div>
+    <script>
+        async function zip_api(myForm) {
+            //document.getElementById("result").innerHTML =  myForm.zipcode.value;
+            const endpoint = "https://zipcloud.ibsnet.co.jp/api/search";
+            const res = await fetch(endpoint+"?zipcode="+myForm.zipcode.value);
+            const data = await res.json();
+            const addr = data.results[0];
+            document.getElementById("result").innerHTML 
+                = addr["address1"]+addr["address2"]+addr["address3"];
+        }
+    </script>
+</body>
+</html>
